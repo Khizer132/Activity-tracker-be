@@ -10,8 +10,8 @@ router.use(verifyToken);
 router.get('/', getAllTickets);
 router.get('/:id', getTicketById);
 
-router.post('/', adminOnly, createTicket);
-router.delete('/:id', adminOnly, deleteTicket);
+router.post('/', adminOrLead, createTicket);
+router.delete('/:id', adminOrLead, deleteTicket);
 router.patch('/:id', adminOrLead, updateTicket);
 router.post('/:id/assign', adminOrLead, assignTicket);
 router.patch('/:id/duration', adminOrLead, setEstimatedDuration);

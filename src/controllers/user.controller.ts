@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import User from '../models/User.model';
 import Project from '../models/Project.model';
 
-
 export const getAllUsers = async (req: Request, res: Response): Promise<void> => {
   try {
     const users = await User.find({})
@@ -16,7 +15,6 @@ export const getAllUsers = async (req: Request, res: Response): Promise<void> =>
     res.status(500).json({ message: 'Server error.' });
   }
 };
-
 
 export const getUserById = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -71,7 +69,6 @@ export const updateUserRole = async (req: Request, res: Response): Promise<void>
 
 export const deleteUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    // Prevent admin from deleting themselves
     if (req.params.id === req.user._id.toString()) {
       res.status(400).json({ message: 'You cannot delete your own account.' });
       return;
@@ -83,7 +80,6 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
-    // Remove user from all projects they were assigned to
     await Project.updateMany(
       { $or: [{ assignedEmployees: user._id }, { assignedTeamLead: user._id }] },
       {
@@ -92,7 +88,6 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
       }
     );
 
-    // Soft delete: just deactivate (safer than hard delete — preserves ticket history)
     user.isActive = false;
     await user.save();
 
@@ -100,6 +95,7 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
   } catch (error) {
     console.error('DeleteUser error:', error);
     res.status(500).json({ message: 'Server error.' });
+  
   }
 };
 

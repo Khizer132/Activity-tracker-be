@@ -5,7 +5,6 @@ import { adminOnly } from '../middlewares/role.middleware';
 
 const router = Router();
 
-// All user routes require: (1) valid token, (2) admin role
 router.use(verifyToken);
 router.use(adminOnly);
 

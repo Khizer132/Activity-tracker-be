@@ -76,6 +76,13 @@ export const createTicket = async (req: Request, res: Response): Promise<void> =
       return;
     }
 
+    if (req.user.role === 'team_lead') {
+      if (project.assignedTeamLead?.toString() !== req.user._id.toString()) {
+        res.status(403).json({ message: 'You can only create tickets in your project.' });
+        return;
+      }
+    }
+
     const ticket = await Ticket.create({
       title,
       description: description || '',
@@ -84,7 +91,6 @@ export const createTicket = async (req: Request, res: Response): Promise<void> =
       priority: priority || 'medium',
     });
 
-    // Add ticket reference to project
     project.tickets.push(ticket._id);
     await project.save();
 
@@ -143,7 +149,15 @@ export const deleteTicket = async (req: Request, res: Response): Promise<void> =
       return;
     }
 
-    // Remove from project's ticket list
+    // Team lead can only delete tickets within their project
+    if (req.user.role === 'team_lead') {
+      const project = await Project.findById(ticket.project);
+      if (!project || project.assignedTeamLead?.toString() !== req.user._id.toString()) {
+        res.status(403).json({ message: 'You can only delete tickets in your project.' });
+        return;
+      }
+    }
+
     await Project.findByIdAndUpdate(ticket.project, {
       $pull: { tickets: ticket._id },
     });
@@ -258,7 +272,7 @@ export const acceptTicket = async (req: Request, res: Response): Promise<void> =
       return;
     }
 
-    // ⏱ TIMER START: Set acceptedAt to current time
+    //  TIMER START
     ticket.status = 'in_progress';
     ticket.acceptedAt = new Date();
     await ticket.save();
@@ -279,7 +293,7 @@ export const acceptTicket = async (req: Request, res: Response): Promise<void> =
 
 export const submitPullRequest = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { url, message } = req.body;
+    const { url, message } = req.body || {};
 
     if (!url || !message) {
       res.status(400).json({ message: 'PR url and message are required.' });

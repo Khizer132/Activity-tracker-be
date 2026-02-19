@@ -16,8 +16,6 @@ export const verifyToken = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    // 1. Get token from Authorization header
-    //    Frontend sends: "Authorization: Bearer eyJhbGci..."
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -25,15 +23,13 @@ export const verifyToken = async (
       return;
     }
 
-    const token = authHeader.split(' ')[1]; // Extract the token part
+    const token = authHeader.split(' ')[1];
 
-    // 2. Verify and decode the token
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) throw new Error('JWT_SECRET not configured');
 
     const decoded = jwt.verify(token, jwtSecret) as { id: string };
 
-    // 3. Find the user in database to make sure they still exist and are active
     const user = await User.findById(decoded.id).select('+password');
 
     if (!user) {
@@ -46,7 +42,6 @@ export const verifyToken = async (
       return;
     }
 
-    // 4. Attach user to request — now available as req.user in all controllers
     req.user = user;
     next();
   } catch (error: any) {

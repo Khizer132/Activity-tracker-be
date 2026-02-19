@@ -20,7 +20,6 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Check if email already exists
     const existingUser = await User.findOne({ email: email.toLowerCase() });
     if (existingUser) {
       res.status(409).json({ message: 'An account with this email already exists.' });
@@ -28,8 +27,6 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     }
 
     const user = await User.create({ name, email, password });
-
-    // Generate JWT token
     const token = generateToken(user._id.toString());
 
     res.status(201).json({
@@ -67,7 +64,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
 
     if (!user) {
-      // Use a generic message so attackers can't tell if email exists
       res.status(401).json({ message: 'Invalid email or password.' });
       return;
     }
@@ -77,7 +73,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Compare entered password with hashed password in DB
     const isPasswordCorrect = await user.comparePassword(password);
     if (!isPasswordCorrect) {
       res.status(401).json({ message: 'Invalid email or password.' });
