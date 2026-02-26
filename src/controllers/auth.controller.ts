@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import User from '../models/User.model';
+import User from '../models/User.model.ts';
 
 const generateToken = (userId: string): string => {
   const secret = process.env.JWT_SECRET!;

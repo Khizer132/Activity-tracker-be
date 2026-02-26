@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { UserRole } from '../models/User.model';
+import { UserRole } from '../models/User.model.ts';
 
 
 export const requireRole = (...roles: UserRole[]) => {

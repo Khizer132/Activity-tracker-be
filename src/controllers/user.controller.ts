@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import User from '../models/User.model';
-import Project from '../models/Project.model';
+import User from '../models/User.model.ts';
+import Project from '../models/Project.model.ts';
 
 export const getAllUsers = async (req: Request, res: Response): Promise<void> => {
   try {

@@ -1,11 +1,11 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import connectDB from './config/database';
-import authRoutes from './routes/auth.routes';
-import userRoutes from './routes/user.routes';
-import projectRoutes from './routes/project.routes';
-import ticketRoutes from './routes/ticket.routes';
+import connectDB from './config/database.ts';
+import authRoutes from './routes/auth.routes.ts';
+import userRoutes from './routes/user.routes.ts';
+import projectRoutes from './routes/project.routes.ts';
+import ticketRoutes from './routes/ticket.routes.ts';
 
 dotenv.config();
 
@@ -57,10 +57,10 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 const PORT = parseInt(process.env.PORT || '5000', 10);
 
-// app.listen(PORT, () => {
-//   console.log(`\n Server running on http://localhost:${PORT}`);
-//   console.log(` Health check: http://localhost:${PORT}/health`);
-//   console.log(`Environment: ${process.env.NODE_ENV || 'development'}\n`);
-// });
+app.listen(PORT, () => {
+  console.log(`\n Server running on http://localhost:${PORT}`);
+  console.log(` Health check: http://localhost:${PORT}/health`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}\n`);
+});
  
 export default app;
