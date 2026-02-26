@@ -10,10 +10,12 @@ export const getAllTickets = async (req: Request, res: Response): Promise<void> 
 
     if (role === 'admin') {
       query = {};
+
     } else if (role === 'team_lead') {
       const projects = await Project.find({ assignedTeamLead: userId }).select('_id');
       const projectIds = projects.map((p) => p._id);
       query = { project: { $in: projectIds } };
+
     } else {
       query = { assignedTo: userId };
     }
@@ -140,7 +142,6 @@ export const updateTicket = async (req: Request, res: Response): Promise<void> =
   }
 };
 
-
 export const deleteTicket = async (req: Request, res: Response): Promise<void> => {
   try {
     const ticket = await Ticket.findById(req.params.id);
@@ -170,7 +171,6 @@ export const deleteTicket = async (req: Request, res: Response): Promise<void> =
     res.status(500).json({ message: 'Server error.' });
   }
 };
-
 
 export const assignTicket = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -248,7 +248,6 @@ export const setEstimatedDuration = async (req: Request, res: Response): Promise
     res.status(500).json({ message: 'Server error.' });
   }
 };
-
 
 export const acceptTicket = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -387,7 +386,6 @@ export const completeTicket = async (req: Request, res: Response): Promise<void>
     res.status(500).json({ message: 'Server error.' });
   }
 };
-
 
 export const rejectTicket = async (req: Request, res: Response): Promise<void> => {
   try {

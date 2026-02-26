@@ -97,6 +97,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+
 export const getMe = async (req: Request, res: Response): Promise<void> => {
   try {
     const user = await User.findById(req.user._id).populate(
@@ -114,4 +115,5 @@ export const getMe = async (req: Request, res: Response): Promise<void> => {
     console.error('GetMe error:', error);
     res.status(500).json({ message: 'Server error.' });
   }
+
 };
