@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Ticket from '../models/Ticket.model';
-import Project from '../models/Project.model';
+import Ticket from '../models/Ticket.model.js';
+import Project from '../models/Project.model.js';
 
 export const getAllTickets = async (req: Request, res: Response): Promise<void> => {
   try {
