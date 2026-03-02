@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { getAllTickets, getTicketById, createTicket, updateTicket, deleteTicket, assignTicket, setEstimatedDuration, acceptTicket, submitPullRequest, completeTicket, rejectTicket } from '../controllers/ticket.controller.ts';
-import { verifyToken } from '../middlewares/auth.middleware.ts';
-import { adminOnly, adminOrLead, employeeOnly } from '../middlewares/role.middleware.ts';
+import { getAllTickets, getTicketById, createTicket, updateTicket, deleteTicket, assignTicket, setEstimatedDuration, acceptTicket, submitPullRequest, completeTicket, rejectTicket } from '../controllers/ticket.controller';
+import { verifyToken } from '../middlewares/auth.middleware';
+import { adminOnly, adminOrLead, employeeOnly } from '../middlewares/role.middleware';
 
 const router = Router();
 

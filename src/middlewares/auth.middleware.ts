@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import User, { IUser } from '../models/User.model.ts';
+import User, { IUser } from '../models/User.model';
 
 declare global {
   namespace Express {

@@ -1,11 +1,11 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import connectDB from './config/database.ts';
-import authRoutes from './routes/auth.routes.ts';
-import userRoutes from './routes/user.routes.ts';
-import projectRoutes from './routes/project.routes.ts';
-import ticketRoutes from './routes/ticket.routes.ts';
+import connectDB from './config/database';
+import authRoutes from './routes/auth.routes';
+import userRoutes from './routes/user.routes';
+import projectRoutes from './routes/project.routes';
+import ticketRoutes from './routes/ticket.routes';
 
 dotenv.config();
 
