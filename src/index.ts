@@ -28,6 +28,13 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/', (req: Request, res: Response) => {
+  res.json({
+    message: 'Activity Tracker API is running',
+    timestamp: new Date().toISOString(),
+  });
+})
+
 app.get('/health', (req: Request, res: Response) => {
   res.json({
     status: 'ok',
