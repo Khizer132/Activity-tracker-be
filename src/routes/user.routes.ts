@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { getAllUsers, getUserById, updateUserRole, deleteUser, assignUserToProject, removeUserFromProject } from '../controllers/user.controller';
-import { verifyToken } from '../middlewares/auth.middleware.js';
-import { adminOnly } from '../middlewares/role.middleware.js';
+import { verifyToken } from '../middlewares/auth.middleware';
+import { adminOnly } from '../middlewares/role.middleware';
 
 const router = Router();
 
