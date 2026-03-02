@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { getAllProjects, getProjectById, createProject, updateProject, deleteProject, assignMemberToProject } from '../controllers/project.controller';
-import { verifyToken } from '../middlewares/auth.middleware';
-import { adminOnly } from '../middlewares/role.middleware';
+import { verifyToken } from '../middlewares/auth.middleware.js';
+import { adminOnly } from '../middlewares/role.middleware.js';
 
 const router = Router();
 
