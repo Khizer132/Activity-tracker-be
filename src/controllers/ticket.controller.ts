@@ -117,10 +117,10 @@ export const updateTicket = async (req: Request, res: Response): Promise<void> =
       if (req.body[field] !== undefined) updates[field] = req.body[field];
     });
 
-    const ticket = await Project.findByIdAndUpdate(req.params.id, updates, {
-      new: true,
-      runValidators: true,
-    });
+    // const ticket = await Project.findByIdAndUpdate(req.params.id, updates, {
+    //   new: true,
+    //   runValidators: true,
+    // });
 
     const updatedTicket = await Ticket.findByIdAndUpdate(
       req.params.id,
@@ -401,6 +401,14 @@ export const rejectTicket = async (req: Request, res: Response): Promise<void> =
         message: `Cannot reject a ticket with status: ${ticket.status}. Must be 'pr_submitted'.`,
       });
       return;
+    }
+
+    if (req.user.role === 'team_lead') {
+      const project = await Project.findById(ticket.project);
+      if (!project || project.assignedTeamLead?.toString() !== req.user._id.toString()) {
+        res.status(403).json({ message: 'You can only reject tickets in your project.' });
+        return;
+      }
     }
 
     ticket.status = 'rejected';

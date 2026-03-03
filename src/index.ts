@@ -64,10 +64,10 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 const PORT = parseInt(process.env.PORT || '5000', 10);
 
-// app.listen(PORT, () => {
-//   console.log(`\n Server running on http://localhost:${PORT}`);
-//   console.log(` Health check: http://localhost:${PORT}/health`);
-//   console.log(`Environment: ${process.env.NODE_ENV || 'development'}\n`);
-// });
+app.listen(PORT, () => {
+  console.log(`\n Server running on http://localhost:${PORT}`);
+  console.log(` Health check: http://localhost:${PORT}/health`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}\n`);
+});
  
 export default app;

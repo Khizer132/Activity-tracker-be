@@ -185,6 +185,16 @@ export const assignMemberToProject = async (req: Request, res: Response): Promis
       return;
     }
 
+    if(memberRole === 'team_lead' && user.role !== 'team_lead') {
+      res.status(400).json({ message: 'On;ly Users with role team leads can be assigned as team leads.' });
+      return;
+    }
+
+    if(memberRole === 'employee' && user.role !== 'employee') {
+      res.status(400).json({ message: 'Only Users with role employees can be assigned as employees.' });
+      return;
+    }
+
     if (memberRole === 'team_lead') {
       project.assignedTeamLead = user._id;
     } else {
